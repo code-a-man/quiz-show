@@ -33,7 +33,7 @@ const SessionPage = ({ params }: { params: { uuid: string } }) => {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const response = await fetch(`https://localhost:3000/api/get-quiz`, {
+        const response = await fetch(`/api/get-quiz`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -72,7 +72,7 @@ const SessionPage = ({ params }: { params: { uuid: string } }) => {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
       try {
-        await fetch(`https://localhost:3000/api/submit-quiz`, {
+        await fetch(`/api/submit-quiz`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

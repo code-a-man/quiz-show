@@ -16,16 +16,13 @@ const PanelPage = ({ params }: { params: { token: string } }) => {
 
   const generateUUID = async () => {
     try {
-      const response = await fetch(
-        "https://localhost:3000/api/bilisimekipyonetim/create-session",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${params.token}`,
-          },
-        }
-      );
+      const response = await fetch("/api/bilisimekipyonetim/create-session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${params.token}`,
+        },
+      });
       const { sessionUUID } = await response.json();
       setUuid(sessionUUID);
       console.log("UUID generated:", sessionUUID);
