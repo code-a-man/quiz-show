@@ -6,6 +6,7 @@ import { QRCodeCanvas } from "qrcode.react";
 import Image from "next/image";
 
 import logo from "@/assets/BilisimLogo2.webp";
+import { Button } from "@/components/ui/button";
 
 const PanelPage = ({ params }: { params: { token: string } }) => {
   const decoded = jwt.decode(params.token);
@@ -32,13 +33,20 @@ const PanelPage = ({ params }: { params: { token: string } }) => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center gap-4">
       {uuid ? (
-        <QRCodeCanvas value={uuid} size={300} />
+        <div className="flex flex-col items-center gap-1">
+          <h1 className="text-xl font-bold">Yarışma Kodunuz:</h1>
+          <p className="text-md font-bold">{uuid}</p>
+          <QRCodeCanvas value={uuid} size={300} />
+        </div>
       ) : (
         <Image src={logo} alt="Blank" width={300} height={300} />
       )}
-      <button onClick={generateUUID}>Generate UUID</button>
+      <h1 className="text-xl font-bold">Merhaba, {decoded.name}</h1>
+      <Button className="w-full" onClick={generateUUID}>
+        Yarışma Oluştur
+      </Button>
     </div>
   );
 };

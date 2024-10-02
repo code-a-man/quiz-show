@@ -54,19 +54,27 @@ const ResultPage = ({ params }: { params: { uuid: string } }) => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen sm:p-20 font-semibold font-[family-name:var(--font-geist-sans)]">
       {score ? (
-        <Card className="w-full max-w-md p-8">
-          <h1>Sonuçlar</h1>
+        <Card className="w-full max-w-md p-8 flex flex-col gap-4">
+          <h1 className="text-xl">Sonuçlar</h1>
           <p>{params.uuid}</p>
-          <p>Score: {score}</p>
+          <p>Skor: {score} / 3</p>
           <p>
             {" "}
-            Time: {timeText} (
+            Geçen Zaman: {timeText} (
             {dayjs(time).tz("Europe/Istanbul").format("HH:mm:ss")})
           </p>
+          {score === 3 ? (
+            <p className="text-green-500">Tebrikler! Kazandınız!</p>
+          ) : (
+            <p className="text-red-500">Üzgünüz, Kaybettiniz!</p>
+          )}
+          <a href="/" className="text-blue-500 underline">
+            Ana Sayfa
+          </a>
         </Card>
       ) : (
         <Card className="w-full max-w-md p-8">
-          <h1>Geçersiz oturum</h1>
+          <h1></h1>
         </Card>
       )}
     </div>
