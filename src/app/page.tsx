@@ -7,10 +7,8 @@ export default function Home() {
         <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
           Bilişim Kulübü Bilgi Yarışması
         </h1>
+        <p className="text-xl">Katılmak için standımıza bekliyoruz.</p>
         <div className="flex flex-row gap-4">
-          <a href="/scan">
-            <Button className="w-full sm:w-auto">Katıl</Button>
-          </a>
           <a
             href="https://linktr.ee/kayubilisim "
             target="_blank"
