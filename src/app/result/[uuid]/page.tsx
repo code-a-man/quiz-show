@@ -45,28 +45,31 @@ const ResultPage = ({ params }: { params: { uuid: string } }) => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTimeText(
-        dayjs(time * 1000)
-          .tz("Europe/Istanbul")
-          .fromNow()
-      );
+      setTimeText(dayjs(time).tz("Europe/Istanbul").fromNow());
     }, 1000);
 
     return () => clearInterval(interval);
   }, [time]);
 
   return (
-    <Card>
-      <h1>Result</h1>
-      <p>Score: {score}</p>
-      <p>
-        Time: {timeText} (
-        {dayjs(time * 1000)
-          .tz("Europe/Istanbul")
-          .format("HH:mm:ss")}
-        )
-      </p>
-    </Card>
+    <div className="flex flex-col items-center justify-center min-h-screen sm:p-20 font-semibold font-[family-name:var(--font-geist-sans)]">
+      {score ? (
+        <Card className="w-full max-w-md p-8">
+          <h1>Sonuçlar</h1>
+          <p>{params.uuid}</p>
+          <p>Score: {score}</p>
+          <p>
+            {" "}
+            Time: {timeText} (
+            {dayjs(time).tz("Europe/Istanbul").format("HH:mm:ss")})
+          </p>
+        </Card>
+      ) : (
+        <Card className="w-full max-w-md p-8">
+          <h1>Geçersiz oturum</h1>
+        </Card>
+      )}
+    </div>
   );
 };
 
