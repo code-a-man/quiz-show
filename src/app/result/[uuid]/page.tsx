@@ -53,7 +53,7 @@ const ResultPage = ({ params }: { params: { uuid: string } }) => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen sm:p-20 font-semibold font-[family-name:var(--font-geist-sans)]">
-      {score ? (
+      {time ? (
         <Card className="w-full max-w-md p-8 flex flex-col gap-4">
           <h1 className="text-xl">Sonuçlar</h1>
           <p>{params.uuid}</p>

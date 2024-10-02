@@ -53,11 +53,6 @@ const SessionPage = ({ params }: { params: { uuid: string } }) => {
   }, [params.uuid]);
 
   const submit = useCallback(async () => {
-    if (answers.length === 0) {
-      console.log("No answers to submit.");
-      return;
-    }
-
     try {
       await fetch(`/api/submit-quiz`, {
         method: "POST",
@@ -120,8 +115,11 @@ const SessionPage = ({ params }: { params: { uuid: string } }) => {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
       if (answers.length === 0) {
-        console.log("No answers to submit.");
-        return;
+        setAnswers([
+          { id: 1, answer: "X" },
+          { id: 2, answer: "X" },
+          { id: 3, answer: "X" },
+        ]);
       }
 
       try {
