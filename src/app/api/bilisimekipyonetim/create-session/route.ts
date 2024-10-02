@@ -25,6 +25,7 @@ export async function POST(request: Request) {
       "Content-Type": "application/json",
       Authorization: `${jwt}`,
     },
+    cache: "no-cache",
   });
   const data = await response.json();
   return new Response(JSON.stringify(data), {

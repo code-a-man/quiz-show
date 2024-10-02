@@ -23,6 +23,7 @@ export async function POST(request: Request) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(newAnswers),
+      cache: "force-cache",
     });
 
     const data = await response.json(); // Get the response data
