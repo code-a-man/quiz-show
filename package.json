@@ -13,6 +13,7 @@
     "@yudiel/react-qr-scanner": "^2.0.8",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "dayjs": "^1.11.13",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.446.0",
     "next": "14.2.13",

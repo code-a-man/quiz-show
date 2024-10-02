@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 type Question = {
   id: number;
@@ -30,6 +30,8 @@ const SessionPage = ({ params }: { params: { uuid: string } }) => {
     React.Dispatch<React.SetStateAction<Answer[]>>
   ];
 
+  const [timer, setTimer] = useState(25);
+
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
@@ -49,6 +51,52 @@ const SessionPage = ({ params }: { params: { uuid: string } }) => {
 
     fetchQuestions();
   }, [params.uuid]);
+
+  const submit = useCallback(async () => {
+    if (answers.length === 0) {
+      console.log("No answers to submit.");
+      return;
+    }
+
+    try {
+      await fetch(`/api/submit-quiz`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ uuid: params.uuid, newAnswers: answers }),
+      });
+      window.location.href = `/result/${params.uuid}`;
+    } catch (error) {
+      console.error("Error submitting answers:", error);
+    }
+  }, [answers, params.uuid]);
+
+  const [quizCompleted, setQuizCompleted] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimer((prevTimer) => {
+        if (prevTimer <= 1) {
+          clearInterval(interval);
+          if (!quizCompleted) {
+            const newAnswers = [
+              { id: 1, answer: "X" },
+              { id: 2, answer: "X" },
+              { id: 3, answer: "X" },
+            ];
+            setAnswers(newAnswers);
+            submit();
+            setQuizCompleted(true);
+          }
+          return 0;
+        }
+        return prevTimer - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [answers, questions, submit, quizCompleted]);
 
   const handleAnswerClick = async (answer: string) => {
     if (currentQuestionIndex >= questions.length) {
@@ -71,6 +119,11 @@ const SessionPage = ({ params }: { params: { uuid: string } }) => {
     if (currentQuestionIndex + 1 < questions.length) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
+      if (answers.length === 0) {
+        console.log("No answers to submit.");
+        return;
+      }
+
       try {
         await fetch(`/api/submit-quiz`, {
           method: "POST",
@@ -79,6 +132,7 @@ const SessionPage = ({ params }: { params: { uuid: string } }) => {
           },
           body: JSON.stringify({ uuid: params.uuid, newAnswers }),
         });
+        window.location.href = `/result/${params.uuid}`;
       } catch (error) {
         console.error("Error submitting answers:", error);
       }
@@ -97,6 +151,9 @@ const SessionPage = ({ params }: { params: { uuid: string } }) => {
     <div className="flex flex-col items-center justify-center min-h-screen sm:p-20 font-[family-name:var(--font-geist-sans)]">
       {questions ? (
         <Card className="w-full max-w-md p-8">
+          <p className="text-sm font-semibold">
+            {timer} - {currentQuestionIndex + 1}/{questions.length}
+          </p>
           <h1>Question {currentQuestionIndex + 1}</h1>
           <h2 className="text-xl font-semibold">
             {questions[currentQuestionIndex].questionText}
