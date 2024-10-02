@@ -79,7 +79,6 @@ const SessionPage = ({ params }: { params: { uuid: string } }) => {
           },
           body: JSON.stringify({ uuid: params.uuid, newAnswers }),
         });
-        alert("All questions answered and submitted!");
       } catch (error) {
         console.error("Error submitting answers:", error);
       }
@@ -96,28 +95,34 @@ const SessionPage = ({ params }: { params: { uuid: string } }) => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <Card className="w-full max-w-md p-8">
-        <h1>Question {currentQuestionIndex + 1}</h1>
-        <h2 className="text-xl font-semibold">
-          {questions[currentQuestionIndex].questionText}
-        </h2>
-        <ul className="flex flex-col gap-2">
-          {questions[currentQuestionIndex].options.map((option, index) => (
-            <li key={index} className="flex items-center gap-2 w-full">
-              <Button
-                key={index}
-                onClick={() => handleAnswerClick(option)}
-                variant="outline"
-                size="sm"
-                id={`${index}`}
-                className="w-full border border-sky-300"
-              >
-                {option}
-              </Button>
-            </li>
-          ))}
-        </ul>
-      </Card>
+      {questions ? (
+        <Card className="w-full max-w-md p-8">
+          <h1>Question {currentQuestionIndex + 1}</h1>
+          <h2 className="text-xl font-semibold">
+            {questions[currentQuestionIndex].questionText}
+          </h2>
+          <ul className="flex flex-col gap-2">
+            {questions[currentQuestionIndex].options.map((option, index) => (
+              <li key={index} className="flex items-center gap-2 w-full">
+                <Button
+                  key={index}
+                  onClick={() => handleAnswerClick(option)}
+                  variant="outline"
+                  size="sm"
+                  id={`${index}`}
+                  className="w-full border border-sky-300"
+                >
+                  {option}
+                </Button>
+              </li>
+            ))}
+          </ul>
+        </Card>
+      ) : (
+        <Card className="w-full max-w-md p-8">
+          <h1>Geçersiz oturum</h1>
+        </Card>
+      )}
     </div>
   );
 };
