@@ -20,7 +20,6 @@ export async function GET(request: Request) {
 
     const response = await fetch(`${API_URL}/session/${uuid}`, {
       method: "GET",
-      cache: "force-cache",
     });
     console.log("Response:", response);
     const data = await response.json(); // Get the response data
