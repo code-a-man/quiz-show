@@ -25,7 +25,9 @@ const PanelPage = ({ params }: { params: { token: string } }) => {
         },
       });
       const { sessionUUID } = await response.json();
-      setUuid(sessionUUID);
+      // yarisma.kayubilisim.org/quiz/[uuid]
+      const url = `https://yarisma.kayubilisim.org/quiz/${sessionUUID}`;
+      setUuid(url);
       console.log("UUID generated:", sessionUUID);
     } catch (error) {
       console.error("Error generating UUID:", error);
