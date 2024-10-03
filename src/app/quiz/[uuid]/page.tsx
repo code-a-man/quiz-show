@@ -30,7 +30,7 @@ const SessionPage = ({ params }: { params: { uuid: string } }) => {
     React.Dispatch<React.SetStateAction<Answer[]>>
   ];
 
-  const [timer, setTimer] = useState(25);
+  const [timer, setTimer] = useState(30);
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -148,12 +148,20 @@ const SessionPage = ({ params }: { params: { uuid: string } }) => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen sm:p-20 font-[family-name:var(--font-geist-sans)]">
       {questions ? (
-        <Card className="w-full max-w-md p-8">
-          <p className="text-sm font-semibold">
-            {timer} - {currentQuestionIndex + 1}/{questions.length}
-          </p>
-          <h1>Question {currentQuestionIndex + 1}</h1>
-          <h2 className="text-xl font-semibold">
+        <Card className="w-full max-w-md p-8 border border-gray-500">
+          <div className="flex justify-between items-center mb-4">
+            <p
+              className={`text-2xl font-bold ${
+                timer < 11 ? "text-red-600" : ""
+              }`}
+            >
+              {timer}
+            </p>
+            <p className="text-lg font-semibold">
+              {currentQuestionIndex + 1}/{questions.length}
+            </p>
+          </div>
+          <h2 className="text-xl font-semibold mb-4">
             {questions[currentQuestionIndex].questionText}
           </h2>
           <ul className="flex flex-col gap-2">
@@ -165,7 +173,7 @@ const SessionPage = ({ params }: { params: { uuid: string } }) => {
                   variant="outline"
                   size="sm"
                   id={`${index}`}
-                  className="w-full border border-sky-300"
+                  className="w-full border border-gray-500 hover:bg-background"
                 >
                   {option}
                 </Button>
