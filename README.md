@@ -1,5 +1,7 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+**For API please visit: [quiz-show-api](https://github.com/code-a-man/quiz-show-api)**
+
 ## Getting Started
 
 First, run the development server:
